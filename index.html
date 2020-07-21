@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="searchfield">
+<div id="searchresult"></div>
+<p id="showData"></p>
+    <script type="text/javascript">
+        const srcData = [
+  {
+   "name": "Senior Officer Trade Back Office",
+   "url": "https://www.blockworks.com/senior-officer-trade-back-office-1061445-jv/?source=searchResults&searchType=1&placement=1&sortBy=date"
+  },
+  {
+   "name": "Junior Officer Trade Back Office",
+   "url": "https://www.blockworks.com/junior-officer-trade-back-office-1061443-jv/?source=searchResults&searchType=1&placement=2&sortBy=date"
+  },
+  {
+   "name": "5 Machine Learning",
+   "url": "https://www.blockworks.com/5-machine-learning-1061442-jv/?source=searchResults&searchType=1&placement=3&sortBy=date"
+  },
+  {
+   "name": "3 Ruby Developers",
+   "url": "https://www.blockworks.com/3-ruby-developers-1061441-jv/?source=searchResults&searchType=1&placement=4&sortBy=date"
+  },
+  {
+   "name": "Sales Staff (Losgistic - Salary Attractive)",
+   "url": "https://www.blockworks.com/sales-staff-losgistic-salary-attractive-1061440-jv/?source=searchResults&searchType=1&placement=5&sortBy=date"
+  },
+  {
+   "name": "5 Front-End Developers",
+   "url": "https://www.blockworks.com/5-front-end-developers-2-1061439-jv/?source=searchResults&searchType=1&placement=6&sortBy=date"
+  }
+]
+// EXTRACT VALUE FOR HTML HEADER. 
+const col = [];
+    for (let i = 0; i < srcData.length; i++) {
+        for (let key in srcData[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+
+    // CREATE DYNAMIC TABLE.
+    const table = document.createElement("table");
+
+    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+    const tr = table.insertRow(-1);                   // TABLE ROW.
+
+    for (let i = 0; i < col.length; i++) {
+        let th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = col[i];
+        tr.appendChild(th);
+    }
+
+    // ADD JSON DATA TO THE TABLE AS ROWS.
+    for (let i = 0; i < srcData.length; i++) {
+
+        let tr = table.insertRow(-1);
+
+        for (let j = 0; j < col.length; j++) {
+            let tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = srcData[i][col[j]];
+        }
+    }
+
+    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+    const divContainer = document.getElementById("showData");
+    divContainer.innerHTML = "";
+    divContainer.appendChild(table);
+
+
+document.getElementById('searchfield').addEventListener('keyup', function(){
+  let pattern = new RegExp(this.value, 'i');
+  let resultSet = srcData.filter(item => item.name.match(pattern) && this.value != '').map(item => `<a href="${item.url}">${item.name}</a>`).join(', ');
+  document.getElementById('showData').innerHTML = resultSet;
+});
+    </script>
+    <script src="./script.js"></script>
+
+<div class="as-console-wrapper"><div class="as-console"></div></div></body>
+</html>
